@@ -7,7 +7,7 @@ int binary_search(int arr[],int s,int e,int x)
 	{
 		int mid = s + (e-s)/2;
 		
-		if(arr[mid] == x)							//middle element is the element that we are finding
+		if(arr[mid] == x)				//middle element is the element that we are finding
 		return mid;
 		
 		else if(arr[mid] > x)
