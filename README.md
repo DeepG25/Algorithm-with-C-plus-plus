@@ -1,2 +1,2 @@
-# IEEE_git
-This is a sample webpage just placed here for practise.
+# Algorithms with C++
+This contains different c++ codes for algorithms
