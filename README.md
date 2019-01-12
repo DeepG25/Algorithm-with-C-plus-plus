@@ -1,2 +1,2 @@
 # Algorithms with C++
-This contains different c++ codes for algorithms
+It consist of different types of algorithms written in c++.
