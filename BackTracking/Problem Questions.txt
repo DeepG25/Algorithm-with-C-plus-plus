@@ -1,1 +1,5 @@
-Problem Statement
+Problem Statement:-
+
+1) Generate All Parenthesis.
+2) Generate All Permutations.
+3) Generate Subsets.
