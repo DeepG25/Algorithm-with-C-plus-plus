@@ -1,42 +1,69 @@
-// 0/1 Knapsack Problem
-
-#include<iostream>
+#include <bits/stdc++.h>
 using namespace std;
-int main()
- {
-	  int n;
-    cin >> n;
-    int val[n],wt[n],M;
-    cin >> M;
-    for(int i=0;i<n;i++)
+
+//  0/1 Knapsack Problem
+vector<int> Knapsack(int wt[],int profit[],int N,int W)
+{
+    int dp[N+1][W+1];
+    //weight is zero
+    for(int i=0;i<=N;i++)
     {
-        cin >> wt[i] >> val[i];
+        dp[i][0] = 0;
     }
-    int dp[n+1][M+1];
-    for(int i=0;i<=n;i++)
+    //zero items are present
+    for(int i=0;i<=W;i++)
     {
-        for(int j=0;j<=M;j++)
-        {
-            if(i==0 || j==0)
-            {
-                dp[i][j] = 0;
-            }
-        }
+        dp[0][i] = 0;
     }
-    for(int i=1;i<=n;i++)
+
+    for(int i=1;i<=N;i++)
     {
-        for(int j=1;j<=M;j++)
+        for(int j=1;j<=W;j++)
         {
-            if(j < wt[i])
+            if(j < wt[i-1])         //cannot select the ith item as weight is greater than total.
             {
-                dp[i][j] = dp[i-1][j];                                          //DP condition
+                dp[i][j] = dp[i-1][j];
+                //case : exclude the ith item
             }
             else
             {
-                dp[i][j] = max(dp[i-1][j] , val[i] + dp[i-1][j-wt[i]]);         //DP condition
+                dp[i][j] = max(dp[i-1][j], profit[i-1] + dp[i-1][j-wt[i-1]]);
+                //case 1: exclude the ith item
+                //case 2: include the ith item
             }
         }
     }
-    cout << dp[n][M] << endl;
-	return 0;
+    vector<int> v;
+    int j = W,i = N;
+    int value = dp[N][W];           //maximum profit
+    while(j>0 && i>0 && value>0)
+    {
+        if(dp[i][j] == dp[i-1][j])
+        {
+            i--;
+        }
+        else{
+            v.push_back(i-1);   //push the index of element that are selected.
+            value = value - profit[i-1];
+            i--;
+            j = j - wt[i-1];
+        }
+    }
+    return v;
+}
+
+int main() {
+    int N,W;
+    cin >> N >> W;
+    int wt[N],profit[N];
+    for(int i=0;i<N;i++)
+    {
+        cin >> wt[i] >> profit[i];
+    }
+    vector<int> ans = Knapsack(wt,profit,N,W);
+    for(int i=0;i<ans.size();i++)
+    {
+        cout << ans[i] << " ";
+    }
+    return 0;
 }
